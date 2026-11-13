@@ -1,0 +1,10 @@
+{
+  "name": "pocket-cowork",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "serve_chat.js",
+  "scripts": {
+    "start": "node serve_chat.js"
+  }
+}

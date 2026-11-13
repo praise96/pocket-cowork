@@ -1,0 +1,285 @@
+{
+  "$readme": "Agent Studio control file. Edit providers, agents, routing, settings and hooks here or from the Studio UI (Ctrl+Shift+A). API keys live in secrets.json.",
+  "version": 1,
+  "providers": [
+    {
+      "id": "agentrouter",
+      "name": "Agent Router",
+      "type": "agentrouter",
+      "baseUrl": "https://agentrouter.org/v1",
+      "enabled": true,
+      "models": [
+        "gpt-5.6-sol",
+        "gpt-6-astra",
+        "gpt-6.1-sol",
+        "claude-opus-5",
+        "claude-opus-4-8",
+        "deepseek-v4-flash"
+      ],
+      "headers": {},
+      "preset": "agentrouter"
+    },
+    {
+      "id": "bedrock",
+      "name": "AWS Bedrock",
+      "type": "openai",
+      "preset": "bedrock",
+      "region": "us-east-1",
+      "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com/openai/v1",
+      "enabled": true,
+      "models": [
+        "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+        "us.anthropic.claude-opus-4-1-20250805-v1:0",
+        "us.meta.llama3-3-70b-instruct-v1:0",
+        "us.amazon.nova-pro-v1:0",
+        "us.deepseek.r1-v1:0"
+      ],
+      "headers": {}
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "type": "openai",
+      "baseUrl": "https://api.openai.com/v1",
+      "enabled": false,
+      "models": [
+        "gpt-4.1",
+        "gpt-4.1-mini",
+        "gpt-4o",
+        "gpt-4o-mini",
+        "o4-mini"
+      ],
+      "headers": {},
+      "preset": "openai"
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "type": "openai",
+      "baseUrl": "https://api.anthropic.com/v1",
+      "enabled": false,
+      "models": [
+        "claude-sonnet-4-5",
+        "claude-opus-4-1",
+        "claude-3-5-haiku-latest"
+      ],
+      "headers": {},
+      "preset": "anthropic"
+    },
+    {
+      "id": "gemini",
+      "name": "Google Gemini",
+      "type": "openai",
+      "baseUrl": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "enabled": false,
+      "models": [
+        "gemini-2.5-pro",
+        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite"
+      ],
+      "headers": {},
+      "preset": "gemini"
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "type": "openai",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "enabled": false,
+      "models": [
+        "openrouter/auto",
+        "anthropic/claude-sonnet-4.5",
+        "google/gemini-2.5-pro",
+        "deepseek/deepseek-chat"
+      ],
+      "headers": {},
+      "preset": "openrouter"
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama (local)",
+      "type": "openai",
+      "baseUrl": "http://localhost:11434/v1",
+      "enabled": false,
+      "models": [
+        "llama3.1",
+        "qwen2.5-coder"
+      ],
+      "headers": {},
+      "preset": "ollama"
+    }
+  ],
+  "agents": [
+    {
+      "id": "builder",
+      "name": "Builder",
+      "emoji": "",
+      "color": "#38bdf8",
+      "model": "gpt-5.6-sol",
+      "temperature": 0.3,
+      "maxTokens": 0,
+      "memory": "both",
+      "tools": [
+        "read",
+        "write",
+        "terminal",
+        "search",
+        "memory"
+      ],
+      "description": "Default full-stack engineer. Ships working code end to end.",
+      "systemPrompt": "You are Builder, a senior full-stack engineer. Read before you write, make minimal correct changes, and always output complete files with their path in the code fence header. Verify with terminal commands when useful."
+    },
+    {
+      "id": "architect",
+      "name": "Architect",
+      "emoji": "",
+      "color": "#a78bfa",
+      "model": "gpt-6-astra",
+      "temperature": 0.5,
+      "maxTokens": 0,
+      "memory": "both",
+      "tools": [
+        "read",
+        "search",
+        "memory"
+      ],
+      "description": "Plans systems, data models and migrations before code is written.",
+      "systemPrompt": "You are Architect. Before proposing code, produce a short plan: goals, constraints, components, data flow, risks, and an ordered task list. Prefer simple designs. Record key decisions with [[remember: ...]]."
+    },
+    {
+      "id": "reviewer",
+      "name": "Reviewer",
+      "emoji": "",
+      "color": "#f59e0b",
+      "model": "gpt-5.6-sol",
+      "temperature": 0.2,
+      "maxTokens": 0,
+      "memory": "long",
+      "tools": [
+        "read",
+        "search"
+      ],
+      "description": "Strict code reviewer: bugs, edge cases, readability.",
+      "systemPrompt": "You are Reviewer. Review the code the user points to. Report findings as a prioritized list (Critical / Major / Minor) with file:line references and concrete fixes. Do not rewrite whole files unless asked."
+    },
+    {
+      "id": "sentinel",
+      "name": "Sentinel",
+      "emoji": "",
+      "color": "#ef4444",
+      "model": "gpt-5.6-sol",
+      "temperature": 0.1,
+      "maxTokens": 0,
+      "memory": "long",
+      "tools": [
+        "read",
+        "search"
+      ],
+      "description": "Security auditor: auth, injection, secrets, OWASP Top 10.",
+      "systemPrompt": "You are Sentinel, an application security auditor. Hunt for auth/permission flaws, injection (SQL, command, XSS), secret leakage, insecure defaults and missing validation. Rate each issue by severity and give a patch."
+    },
+    {
+      "id": "scribe",
+      "name": "Scribe",
+      "emoji": "",
+      "color": "#10b981",
+      "model": "gpt-5.6-sol",
+      "temperature": 0.6,
+      "maxTokens": 0,
+      "memory": "short",
+      "tools": [
+        "read",
+        "write",
+        "search"
+      ],
+      "description": "Writes READMEs, docstrings, changelogs and guides.",
+      "systemPrompt": "You are Scribe, a technical writer. Produce clear, well-structured documentation in Markdown. Match the existing tone of the project and keep examples runnable."
+    }
+  ],
+  "settings": {
+    "general": {
+      "studioName": "Agent Studio",
+      "themePreset": "cyberpunk",
+      "accent": "#f43f5e",
+      "bgBase": "#070510",
+      "bgSidebar": "#0d091c",
+      "bgEditor": "#090614",
+      "bgCard": "#16102c",
+      "borderColor": "#3b2170",
+      "replyColor": "#22d3ee",
+      "thinkingColor": "#f472b6",
+      "collapseThinking": false,
+      "agentTone": "default",
+      "customTonePrompt": "",
+      "compactMode": false,
+      "showTokenUsage": true,
+      "confirmDangerous": true
+    },
+    "editor": {
+      "fontSize": 13,
+      "tabSize": 2,
+      "wordWrap": "on",
+      "minimap": false,
+      "lineNumbers": "on",
+      "fontLigatures": true,
+      "renderWhitespace": "selection",
+      "cursorBlinking": "smooth",
+      "smoothScrolling": true
+    },
+    "chat": {
+      "defaultAgent": "builder",
+      "historyLimit": 40,
+      "autoScroll": true,
+      "sendOnEnter": true
+    },
+    "runtime": {
+      "requestTimeoutSec": 90,
+      "maxToolRounds": 2,
+      "contextFiles": 80,
+      "defaultTemperature": 0.3,
+      "fallbackModel": "gpt-5.6-sol",
+      "retryWithFallback": true
+    },
+    "memory": {
+      "enabled": true,
+      "autoCapture": true,
+      "inlineDirectives": true,
+      "shortTermMax": 40,
+      "shortTermTTLHours": 48,
+      "longTermTopK": 8,
+      "injectPinned": true,
+      "scopeToProject": true
+    },
+    "security": {
+      "hookToken": "",
+      "allowScriptHooks": true,
+      "allowRemoteHookCalls": false
+    }
+  },
+  "hooks": [
+    {
+      "id": "hook_datetime",
+      "name": "Inject current date/time",
+      "event": "beforeChat",
+      "type": "inject",
+      "enabled": true,
+      "template": "Current local time: {{datetime}}. Active workspace: {{workspace}}."
+    },
+    {
+      "id": "hook_example_script",
+      "name": "Example script hook (studio/hooks/example.mjs)",
+      "event": "afterChat",
+      "type": "script",
+      "enabled": false,
+      "file": "example.mjs"
+    },
+    {
+      "id": "hook_webhook",
+      "name": "Notify a webhook after each reply",
+      "event": "afterChat",
+      "type": "webhook",
+      "enabled": false,
+      "url": "https://example.com/webhook"
+    }
+  ]
+}

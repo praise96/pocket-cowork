@@ -1,0 +1,41 @@
+# ============================================================================
+# Agent Studio & Cowork Web IDE — Git Ignore Rules
+# Protects all API keys, auth tokens, local session history, and temp files
+# ============================================================================
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+studio/secrets.json
+
+# Local Agent State, Auth Tokens & Personal Chat History
+.agents/
+.cowork/
+studio/logs/
+studio/memory/
+sessions_db.json
+agent_memory.json
+*.tmp
+
+# Local SQLite Databases
+*.db
+*.sqlite
+*.sqlite3
+*.s3db
+workspace.db
+
+# Node & OS Artifacts
+node_modules/
+npm-debug.log*
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Unrelated / External Subprojects
+dovexai*
+start-php-server.bat
+_write_test*
+

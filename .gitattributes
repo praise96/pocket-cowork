@@ -1,0 +1,9 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# Ensure shell scripts always use Linux LF endings (vital for Android Termux)
+*.sh text eol=lf
+
+# Windows batch files use Windows CRLF
+*.bat text eol=crlf
+
